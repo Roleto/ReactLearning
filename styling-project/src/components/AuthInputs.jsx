@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { styled } from 'styled-components';
+// import { styled } from 'styled-components';
 import Button from './Button';
 import Input from './Input';
 
@@ -23,19 +23,23 @@ export default function AuthInputs() {
   const emailNotValid = submitted && !enteredEmail.includes('@');
   const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
-  const ControleContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  `;
+  // const ControleContainer = styled.div`
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 0.5rem;
+  //   margin-bottom: 1.5rem;
+  // `;
 
   return (
-    <div id="auth-inputs">
-      <ControleContainer>
+    <div
+      id="auth-inputs"
+      className="w-full max-w-sm mx-auto p-8 rounded shadow-md bg-gradient-to-b from-stone-700 to-stone-800"
+    >
+      <div className="flex flex-col gap-2 mb-6">
         <Input
+          value={enteredEmail}
           label="Email"
-          $invalid={emailNotValid}
+          invalid={emailNotValid}
           type="email"
           // style={{
           //   backgroundColor: emailNotValid ? 'fed2d2' : 'd1d5db',
@@ -43,16 +47,17 @@ export default function AuthInputs() {
           onChange={(event) => handleInputChange('email', event.target.value)}
         />
         <Input
+          value={enteredPassword}
           label="Password"
-          $invalid={emailNotValid}
+          invalid={passwordNotValid}
           type="password"
           onChange={(event) => handleInputChange('password', event.target.value)}
         />
-      </ControleContainer>
-      <div className="actions">
+      </div>
+      <div className="flex justify-end gap-4">
         <button
           type="button"
-          className="text-button"
+          className="text-amber-400 hover:text-amber-500"
         >
           Create a new account
         </button>
