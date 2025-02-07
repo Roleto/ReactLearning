@@ -1,25 +1,35 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import QUESTIONS from './question';
 import quizImg from '../../assets/quiz-complete.png';
 import QuizProgress from './QuizProgress';
 export default function Quiz() {
-  const [{ userAnswers }, setState] = useState({
-    userAnswers: [],
-  });
-  const activeQuestionIndex = userAnswers.length;
+  const shuffledAnswers = useRef();
+  const [userAnswers, setUserAnswers] = useState([]);
+  const [answerState, setAnswerState] = useState('');
+  const activeQuestionIndex =
+    answerState === '' ? userAnswers.length : userAnswers.length - 1;
   const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
-  const HandleSelectAnswer = useCallback(function HandleSelectAnswer(
-    selectedAnser
-  ) {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        userAnswers: [...prevState.userAnswers, selectedAnser],
-      };
-    });
-  },
-  []);
+  const HandleSelectAnswer = useCallback(
+    function HandleSelectAnswer(selectedAnser) {
+      setUserAnswers((prevState) => {
+        return [...prevState, selectedAnser];
+      });
+      setAnswerState('answered');
+
+      setTimeout(() => {
+        if (selectedAnser == QUESTIONS[activeQuestionIndex].answers[0]) {
+          setAnswerState('correct');
+        } else {
+          setAnswerState('wrong');
+        }
+        setTimeout(() => {
+          setAnswerState('');
+        }, 2000);
+      }, 1000);
+    },
+    [activeQuestionIndex]
+  );
 
   const handleSKipAnswer = useCallback(
     () => HandleSelectAnswer(null),
@@ -33,8 +43,10 @@ export default function Quiz() {
       </div>
     );
   }
-  const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers];
-  shuffledAnswers.sort(() => Math.random() - 0.5);
+  if (!shuffledAnswers.current) {
+    shuffledAnswers.current = [...QUESTIONS[activeQuestionIndex].answers];
+    shuffledAnswers.current.sort(() => Math.random() - 0.5);
+  }
 
   return (
     <div id="quiz">
@@ -45,15 +57,6 @@ export default function Quiz() {
           onTimeOut={handleSKipAnswer}
         />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-        <ul id="answers">
-          {shuffledAnswers.map((answer, index) => (
-            <li className="answer" key={index}>
-              <button onClick={() => handleSelectAnswer(answer)}>
-                {answer}
-              </button>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
