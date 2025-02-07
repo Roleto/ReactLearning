@@ -1,9 +1,9 @@
 import { useCallback, useRef, useState } from 'react';
 import QUESTIONS from './question';
 import quizImg from '../../assets/quiz-complete.png';
-import QuizProgress from './QuizProgress';
+import Question from './Question.jsx';
+
 export default function Quiz() {
-  const shuffledAnswers = useRef();
   const [userAnswers, setUserAnswers] = useState([]);
   const [answerState, setAnswerState] = useState('');
   const activeQuestionIndex =
@@ -43,21 +43,18 @@ export default function Quiz() {
       </div>
     );
   }
-  if (!shuffledAnswers.current) {
-    shuffledAnswers.current = [...QUESTIONS[activeQuestionIndex].answers];
-    shuffledAnswers.current.sort(() => Math.random() - 0.5);
-  }
 
   return (
     <div id="quiz">
-      <div id="question">
-        <QuizProgress
-          key={activeQuestionIndex}
-          timout={10000}
-          onTimeOut={handleSKipAnswer}
-        />
-        <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-      </div>
+      <Question
+        key={activeQuestionIndex}
+        questionText={QUESTIONS[activeQuestionIndex].text}
+        anserws={QUESTIONS[activeQuestionIndex].answers}
+        onSelectAnswer={HandleSelectAnswer}
+        selectedAnswer={userAnswers[userAnswers.length - 1]}
+        answerState={answerState}
+        onSkipAnswer={handleSKipAnswer}
+      />
     </div>
   );
 }

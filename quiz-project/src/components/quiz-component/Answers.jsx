@@ -1,8 +1,21 @@
-export default function Answers() {
+import { useRef } from 'react';
+
+export default function Answers({
+  answers,
+  selectedAnswer,
+  answerState,
+  onSelect,
+}) {
+  const shuffledAnswers = useRef();
+
+  if (!shuffledAnswers.current) {
+    shuffledAnswers.current = [...answers];
+    shuffledAnswers.current.sort(() => Math.random() - 0.5);
+  }
   return (
     <ul id="answers">
       {shuffledAnswers.current.map((answer, index) => {
-        const isSelected = userAnswers[userAnswers.length - 1] === answer;
+        const isSelected = selectedAnswer === answer;
         let cssClasses = '';
         if (answerState === 'answered' && isSelected) {
           cssClasses = 'selected';
@@ -19,10 +32,7 @@ export default function Answers() {
 
         return (
           <li className="answer" key={index}>
-            <button
-              onClick={() => HandleSelectAnswer(answer)}
-              className={cssClasses}
-            >
+            <button onClick={() => onSelect(answer)} className={cssClasses}>
               {answer}
             </button>
           </li>
