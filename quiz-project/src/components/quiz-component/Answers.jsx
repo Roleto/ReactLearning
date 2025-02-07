@@ -32,7 +32,11 @@ export default function Answers({
 
         return (
           <li className="answer" key={index}>
-            <button onClick={() => onSelect(answer)} className={cssClasses}>
+            <button
+              onClick={() => onSelect(answer)}
+              className={cssClasses}
+              disabled={answerState !== ''}
+            >
               {answer}
             </button>
           </li>
