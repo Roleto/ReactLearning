@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import QUESTIONS from './question';
-import quizImg from '../assets/quiz-complete.png';
+import quizImg from '../../assets/quiz-complete.png';
 export default function Quiz() {
   const [{ userAnswers }, setState] = useState({
     userAnswers: [],
