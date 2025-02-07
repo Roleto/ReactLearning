@@ -9,11 +9,21 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
     isCorrect: null,
   });
 
+  let timer = 10000;
+
   function handleSelectAnswer(answer) {
     setAnswer({
       selectedAnswer: answer,
       isCorrect: null,
     });
+
+    if (answer.selectedAnswer) {
+      timer = 1000;
+    }
+
+    if (answer.isCorrect !== null) {
+      timer = 2000;
+    }
 
     setTimeout(() => {
       setAnswer({
@@ -30,13 +40,18 @@ export default function Question({ index, onSelectAnswer, onSkipAnswer }) {
   let answerState = '';
 
   if (answer.selectedAnswer && answer.isCorrect !== null) {
-    answerState = answer.isCorrect ? 'corect' : 'wrong';
+    answerState = answer.isCorrect ? 'correct' : 'wrong';
   } else if (answer.selectedAnswer) {
     answerState = 'answered';
   }
   return (
     <div id="question">
-      <QuizProgress timout={10000} onTimeOut={onSkipAnswer} />
+      <QuizProgress
+        key={timer}
+        timout={timer}
+        onTimeOut={answer.selectedAnswer === '' ? onSkipAnswer : null}
+        mode={answerState}
+      />
       <h2>{QUESTIONS[index].text}</h2>
       <Answers
         answers={QUESTIONS[index].answers}
