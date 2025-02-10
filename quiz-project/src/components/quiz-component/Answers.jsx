@@ -19,14 +19,12 @@ export default function Answers({
         let cssClasses = '';
         if (answerState === 'answered' && isSelected) {
           cssClasses = 'selected';
-          console.log(cssClasses);
         }
 
         if (
           (answerState === 'wrong' || answerState === 'correct') &&
           isSelected
         ) {
-          console.log(cssClasses);
           cssClasses = answerState;
         }
 
