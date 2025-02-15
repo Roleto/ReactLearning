@@ -7,6 +7,7 @@ export default function Login() {
     event.preventDefault();
     const enteredEmail = email.current.value;
     const enteredPass = password.current.value;
+    // event.target.reset(); this is do what the reset type button does
     // validation
     //send to serve(?)
   }

@@ -5,6 +5,13 @@ export default function Login() {
     email: '',
     password: '',
   });
+  const [didEdit, setDidEdit] = useState({
+    email: false,
+    password: false,
+  });
+
+  const emailIsInvalid = didEdit.email && !inputState.email.includes('@');
+
   function handleSubmit(event) {
     event.preventDefault();
     console.log(inputState);
@@ -14,6 +21,16 @@ export default function Login() {
     setInputState((prevstat) => ({
       ...prevstat,
       [identifier]: value,
+    }));
+    setDidEdit((prevstat) => ({
+      ...prevstat,
+      [identifier]: false,
+    }));
+  }
+  function handleinputBlur(identifier) {
+    setDidEdit((prevstat) => ({
+      ...prevstat,
+      [identifier]: true,
     }));
   }
   return (
@@ -27,11 +44,14 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
+            onBlur={() => handleinputBlur('email')}
             onChange={(event) => handleInputValues('email', event.target.value)}
             value={inputState.email}
           />
+          <div className="control-error">
+            {emailIsInvalid && <p>Please give a valid email address</p>}
+          </div>
         </div>
-
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
           <input
@@ -45,7 +65,6 @@ export default function Login() {
           />
         </div>
       </div>
-
       <p className="form-actions">
         <button className="button button-flat">Reset</button>
         <button className="button">Login</button>
