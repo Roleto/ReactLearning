@@ -7,6 +7,8 @@ export default function Login() {
     event.preventDefault();
     const enteredEmail = email.current.value;
     const enteredPass = password.current.value;
+    // validation
+    //send to serve(?)
   }
 
   return (
