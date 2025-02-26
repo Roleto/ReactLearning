@@ -14,6 +14,7 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    // valadiation is a good idea here too, just to be safe
     console.log(inputState);
   }
 
