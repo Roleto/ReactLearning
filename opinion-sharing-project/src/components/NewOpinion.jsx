@@ -17,9 +17,7 @@ function shareOpinion(prevFormState, formData) {
   if (!isNotEmpty(opinion) || !hasMinLength(opinion, 25)) {
     errors['opinion'] = 'Your opinion filed is empty or dont have at leat 25 characters';
   }
-  console.log(errors);
-  if (errors !== null) {
-    console.log('yay');
+  if (Object.keys(errors).length > 0) {
     return {
       errors,
       enteredValues: {
