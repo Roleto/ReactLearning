@@ -1,0 +1,74 @@
+{
+  "opinions": [
+    {
+      "id": 1748184510019,
+      "votes": 5,
+      "userName": "asdasd",
+      "title": "asdasdasd",
+      "body": "asdasdasdasdasdasd"
+    },
+    {
+      "id": 1748184087883,
+      "votes": 0,
+      "userName": "asdasd",
+      "title": "asdasd",
+      "body": "sadasdasdasdasd"
+    },
+    {
+      "id": 1748182741921,
+      "votes": 0,
+      "userName": "Proba",
+      "title": "Title",
+      "body": "Össze vagyok zavarodba moist akkor müködik vajon?"
+    },
+    {
+      "id": 1748182677880,
+      "votes": 0,
+      "userName": "asdasd",
+      "title": "asdasd",
+      "body": "asdasdasdasdasd"
+    },
+    {
+      "id": 1748182628002,
+      "votes": 0,
+      "userName": "Proba",
+      "title": "asdasd",
+      "body": "asdasdasdasdasdasdasd"
+    },
+    {
+      "id": 1748179192651,
+      "votes": 0,
+      "userName": "Proba",
+      "title": "title",
+      "body": "Opinion_ askhkaldsjfnlékjsdhflk jasnkdflsdabkf sd\n"
+    },
+    {
+      "id": 1741020199602,
+      "votes": 0,
+      "userName": "Roland",
+      "title": "Test!",
+      "body": "This is a test to see the backend is working."
+    },
+    {
+      "id": 1741020148047,
+      "votes": 0,
+      "userName": "Roland",
+      "title": "Test!",
+      "body": "This is a test to see the backend is working."
+    },
+    {
+      "id": 1,
+      "userName": "Maximilian Schwarzmüller",
+      "title": "Do yourself a favor and learn React!",
+      "body": "React is an amazing JavaScript library!\n\nDespite all it's shortcomings.",
+      "votes": 0
+    },
+    {
+      "id": 2,
+      "userName": "Maximilian Schwarzmüller",
+      "title": "React has more depth than you might first think!",
+      "body": "React is a great library to learn, but it's not just about the basics. Dive deeper!\nFor example with this course!",
+      "votes": 0
+    }
+  ]
+}
