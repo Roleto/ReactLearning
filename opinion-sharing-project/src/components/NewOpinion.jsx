@@ -1,39 +1,44 @@
 import { useActionState } from 'react';
-import { isNotEmpty, hasMinLength } from '../util/validations';
-function shareOpinion(prevFormState, formData) {
-  const userName = formData.get('userName');
-  const title = formData.get('title');
-  const opinion = formData.get('body');
+import { isNotEmpty, hasMinLength, hasMaxLength } from '../util/validations';
+import { use } from 'react';
+import { OpinionsContext } from '../store/opinions-context';
+import SubmitButton from './SubmitButton';
 
-  let errors = {};
-
-  if (!isNotEmpty(userName)) {
-    errors['userName'] = 'Name field is empty';
-  }
-
-  if (!isNotEmpty(title)) {
-    errors['title'] = 'Title field is empty';
-  }
-  if (!isNotEmpty(opinion) || !hasMinLength(opinion, 25)) {
-    errors['opinion'] = 'Your opinion filed is empty or dont have at leat 25 characters';
-  }
-  if (Object.keys(errors).length > 0) {
-    return {
-      errors,
-      enteredValues: {
-        userName,
-        title,
-        opinion,
-      },
-    };
-  }
-  return { errors: null };
-}
 export function NewOpinion() {
-  const [formState, formAction] = useActionState(shareOpinion, {
+  const { addOpinion } = use(OpinionsContext);
+  async function shareOpinion(prevFormState, formData) {
+    const userName = formData.get('userName');
+    const title = formData.get('title');
+    const body = formData.get('body');
+
+    let errors = {};
+
+    if (!isNotEmpty(userName)) {
+      errors['userName'] = 'Name field is empty';
+    }
+
+    if (!hasMinLength(title, 5)) {
+      errors['title'] = 'Title must be at least 5 characters long';
+    }
+    if (!hasMinLength(body, 10) || !hasMaxLength(body, 300)) {
+      errors['body'] = 'Opinion must be beetween 10 and 300 characters long';
+    }
+    if (Object.keys(errors).length > 0) {
+      return {
+        errors,
+        enteredValues: {
+          userName,
+          title,
+          body,
+        },
+      };
+    }
+    await addOpinion({ userName, title, body });
+    return { errors: null };
+  }
+  const [formState, formAction, pending] = useActionState(shareOpinion, {
     errors: null,
   });
-  console.log(formState);
   return (
     <div id="new-opinion">
       <h2>Share your opinion!</h2>
@@ -69,12 +74,15 @@ export function NewOpinion() {
             defaultValue={formState.enteredValues?.opinion}
             rows={5}
           ></textarea>
-          {formState.errors && <span className="errors">{formState.errors['opinion']}</span>}
+          {formState.errors && <span className="errors">{formState.errors['body']}</span>}
         </p>
 
-        <p className="actions">
-          <button type="submit">Submit</button>
-        </p>
+        {/* <p className="actions">
+          <button disabled={pending} type="submit">
+            Submit
+          </button>
+        </p> */}
+        <SubmitButton />
       </form>
     </div>
   );
